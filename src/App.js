@@ -15,10 +15,13 @@ function App() {
         {/* Router setup */}
         <BrowserRouter>
           <Navber />
+          <div className="container">
           <Routes>
             <Route exact path='/' element={<Home />} />
             <Route exact path='/about' element={<About />} />
           </Routes>
+          </div>
+            
         </BrowserRouter>
       </NoteState>
 
