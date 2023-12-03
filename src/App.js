@@ -7,6 +7,7 @@ import Home from './Components/Home/Home';
 import Navber from './Components/Home/Navber/Navber'
 import About from './Components/About/About'
 import NoteState from './Context/notes/noteState';
+import Alert from './Components/Home/Note/Alert/Alert';
 function App() {
   return (
     <>
@@ -15,6 +16,7 @@ function App() {
         {/* Router setup */}
         <BrowserRouter>
           <Navber />
+          <Alert massage="This is an alert"/>
           <div className="container">
           <Routes>
             <Route exact path='/' element={<Home />} />
