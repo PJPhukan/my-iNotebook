@@ -1,4 +1,4 @@
-import React,{useState} from "react";
+import React, { useState } from "react";
 import NoteContext from "./noteContext";
 
 
@@ -69,8 +69,33 @@ const NoteState = (props) => {
         }
     ]
     const [notes, setNotes] = useState(initialNotes)
+
+    //Add notes
+    const addNotes = (title,description,tag) => {
+        console.log("adding a new note")
+        const note = {
+            "_id": "6558fb95fef12307fe2719163930438",
+            "user": "6557b150818ad1151801bf1d",
+            "title": title,
+            "description": description,
+            "tag": tag,
+            "date": "2023-11-18T17:59:49.234Z",
+            "__v": 0
+        };
+        setNotes(notes.concat(note))
+
+    }
+    //Edit notes
+    const editNotes = (id) => {
+
+    }
+
+    //Delete notes
+    const deleteNotes = (id) => {
+
+    }
     return (
-        <NoteContext.Provider value={{ notes, setNotes }}>
+        <NoteContext.Provider value={{ notes, addNotes, editNotes, deleteNotes }}>
             {props.children}
         </NoteContext.Provider>
     )
