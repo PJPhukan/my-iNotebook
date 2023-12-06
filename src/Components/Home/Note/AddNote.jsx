@@ -23,7 +23,7 @@ export default function AddNote() {
                       <input type="text" className="form-control" id="title" name='title' placeholder="xyz_title" onChange={onchange} />
                       <label htmlFor="description" className="form-label my-3" >Description</label>
                       <input type="text" id="description" name='description' className="form-control" aria-describedby="passwordHelpBlock" onChange={onchange} />
-                      <input className="btn btn-primary my-3" type="submit" value="Submit" onClick={handleClick} />
+                      <input className="btn btn-primary my-3" type="submit" value="Add Note" onClick={handleClick} />
                   </div>
               </form>
           </div>
