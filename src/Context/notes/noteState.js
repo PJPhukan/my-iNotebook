@@ -3,76 +3,48 @@ import NoteContext from "./noteContext";
 
 
 const NoteState = (props) => {
-    const initialNotes = [
-        {
-            "_id": "65538fb8707fe271916930436",
-            "user": "6557b150818ad1151801bf1d",
-            "title": "My-title first first",
-            "description": "Mydescription first second ",
-            "tag": "First tag first second",
-            "date": "2023-11-18T17:59:35.455Z",
-            "__v": 0
-        },
-        {
-            "_id": "6558fb9507fe27191263930438",
-            "user": "6557b150818ad1151801bf1d",
-            "title": "My-tfdfitle first third",
-            "description": "Mydescription first third ",
-            "tag": "First tag first third",
-            "date": "2023-11-18T17:59:49.234Z",
-            "__v": 0
-        },
-        {
-            "_id": "6558fb9507fe2719169304338",
-            "user": "6557b150818ad1151801bf1d",
-            "title": "fdf-title first third",
-            "description": "Mydescription first third ",
-            "tag": "First tag first third",
-            "date": "2023-11-18T17:59:49.234Z",
-            "__v": 0
-        },
-        {
-            "_id": "6558fb9507fe2731916930438",
-            "user": "6557b150818ad1151801bf1d",
-            "title": "dfdfdffdfdf-title first third",
-            "description": "Mydescription first third ",
-            "tag": "First tag first third",
-            "date": "2023-11-18T17:59:49.234Z",
-            "__v": 0
-        },
-        {
-            "_id": "6558fb95073fe271916930438",
-            "user": "6557b150818ad1151801bf1d",
-            "title": "Mdfdfdftitle first third",
-            "description": "Mydescription first third ",
-            "tag": "First tag first third",
-            "date": "2023-11-18T17:59:49.234Z",
-            "__v": 0
-        },
-        {
-            "_id": "6558fb9507fe2719316930438",
-            "user": "6557b150818ad1151801bf1d",
-            "title": "My-tfdfdfst third",
-            "description": "Mydescription first third ",
-            "tag": "First tag first third",
-            "date": "2023-11-18T17:59:49.234Z",
-            "__v": 0
-        },
-        {
-            "_id": "6558fb9507fe2719163930438",
-            "user": "6557b150818ad1151801bf1d",
-            "title": "jkfdkdkf",
-            "description": "Mydescription first third ",
-            "tag": "First tag first third",
-            "date": "2023-11-18T17:59:49.234Z",
-            "__v": 0
-        }
-    ]
+    const host = "http://localhost:8000";
+    const initialNotes = []
     const [notes, setNotes] = useState(initialNotes)
 
+
+    //Get all notes
+    const getNotes = async () => {
+
+        //API CALL(backend)
+        const url = `${host}/api/notes/fetchallnotes`
+        const response = await fetch(url, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                "auth-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjU1N2IxNTA4MThhZDExNTE4MDFiZjFkIn0sImlhdCI6MTcwMDI0NTg3NX0.FQiQHQ3hQNmPyKkU9F6nBmAw0pgBktDA4Bskt9C4zoQ"
+            }
+        });
+        const json = await response.json();
+        console.log(json)
+        setNotes(json);
+
+    }
+
+
+
     //Add notes
-    const addNotes = (title, description, tag) => {
-        //TODO BACKEND
+    const addNotes = async (title, description, tag) => {
+
+        //API CALL(backend)
+        const url = `${host}/api/notes/addnote`
+        const response = await fetch(url, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "auth-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjU1N2IxNTA4MThhZDExNTE4MDFiZjFkIn0sImlhdCI6MTcwMDI0NTg3NX0.FQiQHQ3hQNmPyKkU9F6nBmAw0pgBktDA4Bskt9C4zoQ"
+            },
+            body: JSON.stringify({ title, description, tag }),
+        });
+        const json = response.json();
+
+
+        //ADD NOTES LOGIC IN CLIENT SITE
         const note = {
             "_id": "6558fb95fef12307fe2719163930438",
             "user": "6557b150818ad1151801bf1d",
@@ -86,20 +58,44 @@ const NoteState = (props) => {
 
     }
     //Edit notes
-    const editNotes = (id,title,description,tag) => {
+    const editNotes = async (id, title, description, tag) => {
 
+        //API CALL(backend)
+        const url = `${host}/api/notes/updatenotes/${id}`
+        const response = await fetch(url, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+                "auth-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjU1N2IxNTA4MThhZDExNTE4MDFiZjFkIn0sImlhdCI6MTcwMDI0NTg3NX0.FQiQHQ3hQNmPyKkU9F6nBmAw0pgBktDA4Bskt9C4zoQ"
+            },
+            body: JSON.stringify({ title, description, tag }),
+        });
+        const json = response.json();
+
+
+        //LOGIC TO EDIT
+        for (let index = 0; index < notes.length; index++) {
+            const element = notes[index];
+            if (element._id === id) {
+                element.title = title;
+                element.description = description;
+                element.tag = tag;
+            }
+        }
     }
 
     //Delete notes
     const deleteNotes = (id) => {
         //TODO BACKEND
 
-        const newNote=notes.filter((note)=>{return note._id!==id})
+        const newNote = notes.filter((note) => { return note._id !== id })
         setNotes(newNote);
         console.log("deleting note " + id)
     }
+
+
     return (
-        <NoteContext.Provider value={{ notes, addNotes, editNotes, deleteNotes }}>
+        <NoteContext.Provider value={{ notes, addNotes, editNotes, deleteNotes, getNotes }}>
             {props.children}
         </NoteContext.Provider>
     )
