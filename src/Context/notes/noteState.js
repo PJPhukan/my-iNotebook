@@ -73,18 +73,21 @@ const NoteState = (props) => {
 
 
         //LOGIC TO EDIT
+        let newNote=JSON.parse(JSON.stringify(notes))//it creates a deep copy of notes
         for (let index = 0; index < notes.length; index++) {
-            const element = notes[index];
-            if (element._id === id) {
-                element.title = title;
-                element.description = description;
-                element.tag = tag;
+            const element = newNote[index];
+            if (newNote[index]._id === id) {
+                newNote[index].title = title;
+                newNote[index].description = description;
+                newNote[index].tag = tag;
+                break;
             }
         }
+        setNotes(newNote)
     }
 
     //Delete notes
-    const deleteNotes = async(id) => {
+    const deleteNotes = async (id) => {
         //API CALL
         const url = `${host}/api/notes/deletenotes/${id}`
         const response = await fetch(url, {
