@@ -1,11 +1,17 @@
 import React, { useEffect } from 'react'
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import "./Navber.css"
 export default function Navber() {
   let location = useLocation();
+  const navigate =useNavigate();
   useEffect(() => {
   }, [location])
 
+  const handleLogOut = () => {
+    localStorage.removeItem('token');
+    navigate('/login')
+    
+  }
   return (
     <nav className="navbar navbar-expand-lg bg-body-tertiary ">
       <div className="container-fluid">
@@ -22,10 +28,10 @@ export default function Navber() {
               <Link className={`nav-link ${location.pathname === '/about' ? "active" : ""}`} aria-current="page" to="/about">About</Link>
             </li>
           </ul>
-          <form className="d-flex" role="search">
+          {!(localStorage.getItem('token')) ? <form className="d-flex" role="search">
             <Link className="btn btn-primary mx-2" to="/signup" role="button">Signup</Link>
             <Link className="btn btn-primary mx-2" to="/login" role="button">Log in</Link>
-          </form>
+          </form> : <button onClick={handleLogOut} className="btn btn-primary mx-2" role="button">Log out</button>}
         </div>
       </div>
     </nav>

@@ -2,7 +2,9 @@ import React, { useContext, useEffect, useRef, useState } from 'react'
 import noteContext from '../../../Context/notes/noteContext'
 import Noteitem from './NoteItem/Noteitem';
 import AddNote from './AddNote';
+import { useNavigate } from 'react-router';
 export default function Notes({ showAlert }) {
+  const navigate =useNavigate();
   const context = useContext(noteContext);
   const { notes, getNotes, editNotes } = context;
 
@@ -17,14 +19,19 @@ export default function Notes({ showAlert }) {
   }
 
   useEffect(() => {
-    getNotes();
+    if (localStorage.getItem('token')) {
+      getNotes();
+    }
+    else{
+      navigate("/login")
+    }
     // eslint-disable-next-line
   }, [])
 
   const handleClick = (e) => {
     editNotes(note.id, note.etitle, note.edescription, note.etag);
     refClose.current.click();
-    showAlert("Deleted successfully","success")
+    showAlert("Deleted successfully", "success")
   }
 
   const onchange = (e) => {
@@ -33,7 +40,7 @@ export default function Notes({ showAlert }) {
 
   return (
     <>
-      <AddNote showAlert={showAlert}/>
+      <AddNote showAlert={showAlert} />
       <button type="button" className="btn btn-primary" style={{ display: 'none' }} data-bs-toggle="modal" data-bs-target="#exampleModal" ref={ref}>Click me
       </button>
       <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -71,7 +78,7 @@ export default function Notes({ showAlert }) {
           {notes.length === 0 && <p>No notes available to display !</p>}
         </div>
         {notes.map((note) => {
-          return <Noteitem key={note._id} upDateNotes={upDateNotes} note={note} showAlert={showAlert}/>
+          return <Noteitem key={note._id} upDateNotes={upDateNotes} note={note} showAlert={showAlert} />
         })}
       </div>
     </>
