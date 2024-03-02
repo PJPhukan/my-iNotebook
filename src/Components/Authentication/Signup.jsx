@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 const host = "http://localhost:8000";
 
 const Signin = ({ showAlert }) => {
-  const [signup, setsignup] = useState({ name: "", email: "", password: "" });
+  const [signup, setsignup] = useState({ name: "", email: "", password: "",Cpassword:"" });
   let navigate = useNavigate();
 
   const HandleSubmit = async (e) => {
@@ -18,7 +18,7 @@ const Signin = ({ showAlert }) => {
       body: JSON.stringify({ name: signup.name, email: signup.email, password: signup.password })
     });
     const json = await response.json();
-    console.log(json)
+    // console.log(json)
     if (signup.password !== signup.Cpassword) {
       showAlert("Incorrect confirm password", "danger")
     }
