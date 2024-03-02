@@ -1,11 +1,11 @@
 import React from 'react'
 import Notes from './Note/Notes';
 import './Home.css'
-function Home() {
+function Home({ showAlert }) {
 
   return (
     <div className='home'>
-            <Notes/>
+      <Notes showAlert={showAlert} />
     </div>
   )
 }

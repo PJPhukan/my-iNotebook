@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 const host = "http://localhost:8000";
 
-const Signin = () => {
+const Signin = ({ showAlert }) => {
   const [signup, setsignup] = useState({ name: "", email: "", password: "" });
   let navigate = useNavigate();
 
@@ -20,19 +20,16 @@ const Signin = () => {
     const json = await response.json();
     console.log(json)
     if (signup.password !== signup.Cpassword) {
-      alert("Incorrect confirm password")
+      showAlert("Incorrect confirm password", "danger")
     }
     if (json.success) {
       //save the auth token and redirect
       localStorage.setItem("token", json.authToken);
       navigate('/');
+      showAlert("Sign up successfull", "success")
     }
     else {
-      if (json.error) {
-        alert(`Sign up failed failed: ${json.error}`);
-      } else {
-        alert("Sign up failed failed. Please try again.");
-      }
+      showAlert("Invalid details", "danger")
     }
   }
 

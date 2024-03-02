@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 const host = "http://localhost:8000";
 
-const Login = () => {
+const Login = ({ showAlert }) => {
     const [login, setlogin] = useState({ email: "", password: "" })
     let navigate = useNavigate();
 
@@ -32,13 +32,10 @@ const Login = () => {
             //save the auth token and redirect
             localStorage.setItem("token", json.authToken);
             navigate('/');
+            showAlert("Login successfull", "success")
         }
         else {
-            if (json.error) {
-                alert(`Login failed: ${json.error}`);
-            } else {
-                alert("Login failed. Please try again.");
-            }
+           showAlert("Invalid credentials","danger")
         }
     }
 
