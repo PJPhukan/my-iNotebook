@@ -44,6 +44,8 @@ const Login = () => {
 
     return (
         <div className='container'>
+            <h1 className='text-center text-bg-secondary p-4'>Login </h1>
+
             <form onSubmit={HandleSubmit}>
                 <div className="mb-3">
                     <label htmlFor="email" className="form-label">Email address</label>
