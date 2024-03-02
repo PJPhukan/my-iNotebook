@@ -19,12 +19,12 @@ export default function Navber() {
               <Link className={`nav-link ${location.pathname === '/' ? "active" : ""}`} aria-current="page" to="/">Home</Link>
             </li>
             <li className="nav-item">
-              <Link className={`nav-link ${location.pathname==='/about'?"active":""}`} aria-current="page" to="/about">About</Link>
+              <Link className={`nav-link ${location.pathname === '/about' ? "active" : ""}`} aria-current="page" to="/about">About</Link>
             </li>
           </ul>
           <form className="d-flex" role="search">
-            <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
-            <button className="btn btn-outline-success" type="submit">Search</button>
+            <Link className="btn btn-primary mx-2" to="/signup" role="button">Signup</Link>
+            <Link className="btn btn-primary mx-2" to="/login" role="button">Log in</Link>
           </form>
         </div>
       </div>
